@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل الدخول</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #0E43F1, #4C8EFF);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-container {
+      background-color: #fff;
+      padding: 30px 25px;
+      width: 350px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .login-container h2 {
+      color: #0E43F1;
+      margin-bottom: 25px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 12px;
+      margin: 12px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    .input-field:focus {
+      border-color: #0E43F1;
+      outline: none;
+      box-shadow: 0 0 5px rgba(14, 67, 241, 0.3);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #0E43F1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    .login-btn:hover {
+      background-color: #083DA3;
+    }
+
+    .signup-link {
+      margin-top: 18px;
+      font-size: 14px;
+    }
+
+    .signup-link a {
+      color: #0E43F1;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .signup-link a:hover {
+      text-decoration: underline;
+    }
+
+    #error-message {
+      color: red;
+      font-size: 14px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h2>تسجيل الدخول</h2>
+    <input type="text" id="username" class="input-field" placeholder="اسم المستخدم">
+    <input type="password" id="password" class="input-field" placeholder="كلمة المرور">
+    <button class="login-btn" onclick="login()">دخول</button>
+    
+    <div class="signup-link">
+      ليس لديك حساب؟ <a href="انشاء.html">إنشاء حساب</a>
+    </div>
+    
+    <p id="error-message"></p>
+  </div>
+
+  <script>
+    function login() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+      const errorMessage = document.getElementById("error-message");
+
+      // إخفاء رسالة الخطأ في البداية
+      errorMessage.style.display = "none";
+
+      if (!username || !password) {
+        errorMessage.textContent = "يرجى ملء جميع الحقول.";
+        errorMessage.style.display = "block";
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+
+      const matchedUser = users.find(user => user.username === username && user.password === password);
+
+      if (matchedUser) {
+        alert("تم تسجيل الدخول بنجاح!");
+        localStorage.setItem("loggedInUser", JSON.stringify(matchedUser));
+        window.location.href = "osos.html";
+      } else {
+        errorMessage.textContent = "اسم المستخدم أو كلمة المرور غير صحيحة.";
+        errorMessage.style.display = "block";
+      }
+    }
+  </script>
+
+</body>
+</html>

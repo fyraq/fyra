@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إنشاء حساب</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #0E43F1, #4C8EFF);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .signup-container {
+      background-color: #fff;
+      padding: 30px 25px;
+      width: 350px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .signup-container h2 {
+      color: #0E43F1;
+      margin-bottom: 25px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 12px;
+      margin: 12px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      transition: 0.3s;
+      font-size: 15px;
+    }
+
+    .input-field:focus {
+      border-color: #0E43F1;
+      outline: none;
+      box-shadow: 0 0 5px rgba(14, 67, 241, 0.3);
+    }
+
+    .signup-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #0E43F1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    .signup-btn:hover {
+      background-color: #083DA3;
+    }
+
+    .login-link {
+      margin-top: 18px;
+      font-size: 14px;
+    }
+
+    .login-link a {
+      color: #0E43F1;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="signup-container">
+    <h2>إنشاء حساب جديد</h2>
+    <input type="text" id="username" class="input-field" placeholder="اسم المستخدم">
+    <input type="password" id="password" class="input-field" placeholder="كلمة المرور">
+    <input type="password" id="confirmPassword" class="input-field" placeholder="تأكيد كلمة المرور">
+    <button class="signup-btn" onclick="register()">تسجيل</button>
+    
+    <div class="login-link">
+      لديك حساب بالفعل؟ <a href="دخول.html">تسجيل الدخول</a>
+    </div>
+  </div>
+
+  <script>
+    function register() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (!username || !password || !confirmPassword) {
+        alert("يرجى ملء جميع الحقول");
+        return;
+      }
+
+      if (password.length < 6) {
+        alert("كلمة المرور يجب أن تكون على الأقل 6 أحرف");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert("كلمتا المرور غير متطابقتين");
+        return;
+      }
+
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+
+      const userExists = users.some(user => user.username === username);
+      if (userExists) {
+        alert("اسم المستخدم مسجل مسبقًا");
+        return;
+      }
+
+      const newUser = { username, password };
+      users.push(newUser);
+      localStorage.setItem("users", JSON.stringify(users));
+
+      alert("تم إنشاء الحساب بنجاح!");
+      window.location.href = "دخول.html";
+    }
+  </script>
+
+</body>
+</html>
